@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.drugs_enterprises_rename.dao.DrugsEnterprisesRenameDao">
+    
+	<sql id="drugsEnterprisesRenameColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.description AS "description",
+		a.m_id AS "mId",
+		a.status AS "status",
+		a.serial_number AS "serialNumber",
+		a.social_credit_code AS "socialCreditCode",
+		a.classification_code AS "classificationCode",
+		a.province_city AS "provinceCity",
+		a.firm_name AS "firmName",
+		a.legal_representative AS "legalRepresentative",
+		a.responsible_persons AS "responsiblePersons",
+		a.quality_directer AS "qualityDirecter",
+		a.registered_address AS "registeredAddress",
+		a.production_address AS "productionAddress",
+		a.production_range AS "productionRange",
+		a.date_of_expiry AS "dateOfExpiry",
+		a.licence_issuing_authority AS "licenceIssuingAuthority",
+		a.signer AS "signer",
+		a.daily_organization AS "dailyOrganization",
+		a.daily_people AS "dailyPeople",
+		a.report_telphone AS "reportTelphone",
+		a.remarks AS "remarks",
+		a.certificate AS "certificate"
+	</sql>
+	
+	<sql id="drugsEnterprisesRenameJoins">
+	</sql>
+    
+	<select id="get" resultType="DrugsEnterprisesRename">
+		SELECT 
+			<include refid="drugsEnterprisesRenameColumns"/>
+		FROM drugs_enterprises_rename a
+		<include refid="drugsEnterprisesRenameJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="DrugsEnterprisesRename">
+		SELECT 
+			<include refid="drugsEnterprisesRenameColumns"/>
+		FROM drugs_enterprises_rename a
+		<include refid="drugsEnterprisesRenameJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="DrugsEnterprisesRename">
+		SELECT 
+			<include refid="drugsEnterprisesRenameColumns"/>
+		FROM drugs_enterprises_rename a
+		<include refid="drugsEnterprisesRenameJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO drugs_enterprises_rename(
+			id,
+			title,
+			description,
+			m_id,
+			status,
+			serial_number,
+			social_credit_code,
+			classification_code,
+			province_city,
+			firm_name,
+			legal_representative,
+			responsible_persons,
+			quality_directer,
+			registered_address,
+			production_address,
+			production_range,
+			date_of_expiry,
+			licence_issuing_authority,
+			signer,
+			daily_organization,
+			daily_people,
+			report_telphone,
+			remarks,
+			certificate
+		) VALUES (
+			#{id},
+			#{title},
+			#{description},
+			#{mId},
+			#{status},
+			#{serialNumber},
+			#{socialCreditCode},
+			#{classificationCode},
+			#{provinceCity},
+			#{firmName},
+			#{legalRepresentative},
+			#{responsiblePersons},
+			#{qualityDirecter},
+			#{registeredAddress},
+			#{productionAddress},
+			#{productionRange},
+			#{dateOfExpiry},
+			#{licenceIssuingAuthority},
+			#{signer},
+			#{dailyOrganization},
+			#{dailyPeople},
+			#{reportTelphone},
+			#{remarks},
+			#{certificate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE drugs_enterprises_rename SET 	
+			title = #{title},
+			description = #{description},
+			m_id = #{mId},
+			status = #{status},
+			serial_number = #{serialNumber},
+			social_credit_code = #{socialCreditCode},
+			classification_code = #{classificationCode},
+			province_city = #{provinceCity},
+			firm_name = #{firmName},
+			legal_representative = #{legalRepresentative},
+			responsible_persons = #{responsiblePersons},
+			quality_directer = #{qualityDirecter},
+			registered_address = #{registeredAddress},
+			production_address = #{productionAddress},
+			production_range = #{productionRange},
+			date_of_expiry = #{dateOfExpiry},
+			licence_issuing_authority = #{licenceIssuingAuthority},
+			signer = #{signer},
+			daily_organization = #{dailyOrganization},
+			daily_people = #{dailyPeople},
+			report_telphone = #{reportTelphone},
+			remarks = #{remarks},
+			certificate = #{certificate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM drugs_enterprises_rename
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

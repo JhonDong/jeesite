@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.product_temp.dao.ProductTempDao">
+    
+	<sql id="productTempColumns">
+		a.id AS "id",
+		a.approval_number AS "approvalNumber",
+		a.product_name AS "productName",
+		a.product_name_en AS "productNameEn",
+		a.commodity_name AS "commodityName",
+		a.commodity_name_en AS "commodityNameEn",
+		a.dosage AS "dosage",
+		a.specification AS "specification",
+		a.manufacturer AS "manufacturer",
+		a.manufacturer_en AS "manufacturerEn",
+		a.manufacturing_address AS "manufacturingAddress",
+		a.manufacturing_address_en AS "manufacturingAddressEn",
+		a.med_type AS "medType",
+		a.verify_date AS "verifyDate",
+		a.valid_date AS "validDate",
+		a.old_approval_number AS "oldApprovalNumber",
+		a.med_code AS "medCode",
+		a.med_code_mark AS "medCodeMark",
+		a.update_time AS "updateTime",
+		a.create_time AS "createTime",
+		a.product_type AS "productType",
+		a.international_bar_code AS "internationalBarCode"
+	</sql>
+	
+	<sql id="productTempJoins">
+	</sql>
+    
+	<select id="get" resultType="ProductTemp">
+		SELECT 
+			<include refid="productTempColumns"/>
+		FROM product_temp a
+		<include refid="productTempJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ProductTemp">
+		SELECT 
+			<include refid="productTempColumns"/>
+		FROM product_temp a
+		<include refid="productTempJoins"/>
+		<where>
+			
+			<if test="approvalNumber != null and approvalNumber != ''">
+				AND a.approval_number LIKE 
+					<if test="dbName == 'oracle'">'%'||#{approvalNumber}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{approvalNumber}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{approvalNumber},'%')</if>
+			</if>
+			<if test="productName != null and productName != ''">
+				AND a.product_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{productName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{productName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{productName},'%')</if>
+			</if>
+			<if test="manufacturer != null and manufacturer != ''">
+				AND a.manufacturer LIKE 
+					<if test="dbName == 'oracle'">'%'||#{manufacturer}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{manufacturer}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{manufacturer},'%')</if>
+			</if>
+			<if test="productType != null and productType != ''">
+				AND a.product_type = #{productType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ProductTemp">
+		SELECT 
+			<include refid="productTempColumns"/>
+		FROM product_temp a
+		<include refid="productTempJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO product_temp(
+			id,
+			approval_number,
+			product_name,
+			product_name_en,
+			commodity_name,
+			commodity_name_en,
+			dosage,
+			specification,
+			manufacturer,
+			manufacturer_en,
+			manufacturing_address,
+			manufacturing_address_en,
+			med_type,
+			verify_date,
+			valid_date,
+			old_approval_number,
+			med_code,
+			med_code_mark,
+			update_time,
+			create_time,
+			product_type,
+			international_bar_code
+		) VALUES (
+			#{id},
+			#{approvalNumber},
+			#{productName},
+			#{productNameEn},
+			#{commodityName},
+			#{commodityNameEn},
+			#{dosage},
+			#{specification},
+			#{manufacturer},
+			#{manufacturerEn},
+			#{manufacturingAddress},
+			#{manufacturingAddressEn},
+			#{medType},
+			#{verifyDate},
+			#{validDate},
+			#{oldApprovalNumber},
+			#{medCode},
+			#{medCodeMark},
+			#{updateTime},
+			#{createTime},
+			#{productType},
+			#{internationalBarCode}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE product_temp SET 	
+			approval_number = #{approvalNumber},
+			product_name = #{productName},
+			product_name_en = #{productNameEn},
+			commodity_name = #{commodityName},
+			commodity_name_en = #{commodityNameEn},
+			dosage = #{dosage},
+			specification = #{specification},
+			manufacturer = #{manufacturer},
+			manufacturer_en = #{manufacturerEn},
+			manufacturing_address = #{manufacturingAddress},
+			manufacturing_address_en = #{manufacturingAddressEn},
+			med_type = #{medType},
+			verify_date = #{verifyDate},
+			valid_date = #{validDate},
+			old_approval_number = #{oldApprovalNumber},
+			med_code = #{medCode},
+			med_code_mark = #{medCodeMark},
+			update_time = #{updateTime},
+			create_time = #{createTime},
+			product_type = #{productType},
+			international_bar_code = #{internationalBarCode}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM product_temp
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

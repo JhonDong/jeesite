@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.thinkgem.jeesite.modules.product_company.dao.ProductCompanyDao">
+
+	<sql id="productCompanyColumns">
+		a.gj_id AS "gjId",
+		a.ds_id AS "dsId",
+		a.hx_id AS "hxId",
+		a.hys_id AS "hysId",
+		a.rt_id AS "rtId",
+		a.kbx_id AS "kbxId"
+	</sql>
+
+	<sql id="productCompanyJoins">
+	</sql>
+
+	<select id="get" resultType="ProductCompany">
+		SELECT b.product_name AS "productName",
+		<include refid="productCompanyColumns" />
+		FROM product_company a,product b
+		<include refid="productCompanyJoins" />
+		WHERE
+		a.gj_id=b.id
+		AND
+		a.gj_id = #{id}
+	</select>
+
+	<select id="findList" resultType="ProductCompany">
+		SELECT b.product_name AS "productName",
+		<include refid="productCompanyColumns" />
+		FROM product_company a,product b
+		<include refid="productCompanyJoins" />
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="ProductCompany">
+		SELECT b.product_name AS "productName",
+		<include refid="productCompanyColumns" />
+		FROM product_company a,product b
+		<include refid="productCompanyJoins" />
+		<where>
+			a.gj_id=b.id
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO product_company(
+		gj_id,
+		ds_id,
+		hx_id,
+		hys_id,
+		rt_id,
+		kbx_id
+		) VALUES (
+		#{gjId},
+		#{dsId},
+		#{hxId},
+		#{hysId},
+		#{rtId},
+		#{kbxId}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE product_company SET
+		gj_id = #{gjId},
+		ds_id =
+		#{dsId},
+		hx_id = #{hxId},
+		hys_id = #{hysId},
+		rt_id = #{rtId},
+		kbx_id =
+		#{kbxId}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		DELETE FROM product_company
+		WHERE id = #{id}
+	</update>
+
+</mapper>

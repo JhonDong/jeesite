@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.product_medical.dao.ProductMedicalDao">
+    
+	<sql id="productMedicalColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.is_special_external_use AS "isSpecialExternalUse",
+		a.is_special_stimulant AS "isSpecialStimulant",
+		a.is_special_psychotropic_drugs AS "isSpecialPsychotropicDrugs",
+		a.is_special_medical_instruments AS "isSpecialMedicalInstruments",
+		a.is_special_efedrina AS "isSpecialEfedrina",
+		a.is_base_drug_list AS "isBaseDrugList",
+		a.is_medical_insurance AS "isMedicalInsurance",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="productMedicalJoins">
+	</sql>
+    
+	<select id="get" resultType="ProductMedical">
+	
+		SELECT
+		b.name AS "gjName",
+			<include refid="productMedicalColumns"/>
+		FROM product_medical a,product b
+		<include refid="productMedicalJoins"/>
+		WHERE 
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ProductMedical">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="productMedicalColumns"/>
+		FROM product_medical a,product b
+		<include refid="productMedicalJoins"/>
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ProductMedical">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="productMedicalColumns"/>
+		FROM product_medical a,product b
+		<include refid="productMedicalJoins"/>
+		<where>
+			a.gj_id=b.id
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO product_medical(
+			<!-- id, -->
+			gj_id,
+			is_special_external_use,
+			is_special_stimulant,
+			is_special_psychotropic_drugs,
+			is_special_medical_instruments,
+			is_special_efedrina,
+			is_base_drug_list,
+			is_medical_insurance,
+			create_time,
+			update_time
+		) VALUES (
+			<!-- #{id}, -->
+			#{gjId},
+			#{isSpecialExternalUse},
+			#{isSpecialStimulant},
+			#{isSpecialPsychotropicDrugs},
+			#{isSpecialMedicalInstruments},
+			#{isSpecialEfedrina},
+			#{isBaseDrugList},
+			#{isMedicalInsurance},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE product_medical SET 	
+			is_special_external_use = #{isSpecialExternalUse},
+			is_special_stimulant = #{isSpecialStimulant},
+			is_special_psychotropic_drugs = #{isSpecialPsychotropicDrugs},
+			is_special_medical_instruments = #{isSpecialMedicalInstruments},
+			is_special_efedrina = #{isSpecialEfedrina},
+			is_base_drug_list = #{isBaseDrugList},
+			is_medical_insurance = #{isMedicalInsurance},
+			update_time=#{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM product_medical
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

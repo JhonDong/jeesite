@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.medicine_zh.dao.MedicineZhDao">
+
+	<sql id="medicineZhColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.zh_medicine_qs AS
+		"zhMedicineQs",
+		a.zh_medicine_cm AS "zhMedicineCm",
+		a.zh_medicine_site
+		AS "zhMedicineSite",
+		a.zh_medicine_quantity AS "zhMedicineQuantity",
+		a.zh_medicine_standard_name AS "zhMedicineStandardName",
+		a.packaging_type AS "packagingType",
+		a.tablet_type AS "tabletType",
+		a.is_special_toxic_tablets AS "isSpecialToxicTablets",
+		a.is_fresh_zh_medicine AS "isFreshZhMedicine",
+		a.compatibility_taboo_varieties AS "compatibilityTabooVarieties",
+		a.is_zh_control_medicine AS "isZhControlMedicine",
+		a.medicine_food_homology AS "medicineFoodHomology",
+		a.is_new_resources_food AS "isNewResourcesFood"
+	</sql>
+
+	<sql id="medicineZhJoins">
+	</sql>
+
+	<select id="get" resultType="MedicineZh">
+		SELECT
+		b.name AS "gjName",
+		<include refid="medicineZhColumns" />
+		FROM medicine_zh a,product b
+		<include refid="medicineZhJoins" />
+		WHERE
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="MedicineZh">
+		SELECT
+		b.name AS "gjName",
+		<include refid="medicineZhColumns" />
+		FROM medicine_zh a,product b
+		<include refid="medicineZhJoins" />
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="MedicineZh">
+		SELECT
+		b.name AS "gjName",
+		<include refid="medicineZhColumns" />
+		FROM medicine_zh a,product b
+		<include refid="medicineZhJoins" />
+		<where>
+			a.gj_id=b.id
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO medicine_zh(
+		gj_id,
+		zh_medicine_qs,
+		zh_medicine_cm,
+		zh_medicine_site,
+		zh_medicine_quantity,
+		zh_medicine_standard_name,
+		packaging_type,
+		tablet_type,
+		is_special_toxic_tablets,
+		is_fresh_zh_medicine,
+		compatibility_taboo_varieties,
+		is_zh_control_medicine,
+		medicine_food_homology,
+		is_new_resources_food
+		) VALUES (
+		#{gjId},
+		#{zhMedicineQs},
+		#{zhMedicineCm},
+		#{zhMedicineSite},
+		#{zhMedicineQuantity},
+		#{zhMedicineStandardName},
+		#{packagingType},
+		#{tabletType},
+		#{isSpecialToxicTablets},
+		#{isFreshZhMedicine},
+		#{compatibilityTabooVarieties},
+		#{isZhControlMedicine},
+		#{medicineFoodHomology},
+		#{isNewResourcesFood}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE medicine_zh SET
+		gj_id = #{gjId},
+		zh_medicine_qs
+		= #{zhMedicineQs},
+		zh_medicine_cm = #{zhMedicineCm},
+		zh_medicine_site =
+		#{zhMedicineSite},
+		zh_medicine_quantity = #{zhMedicineQuantity},
+		zh_medicine_standard_name = #{zhMedicineStandardName},
+		packaging_type =
+		#{packagingType},
+		tablet_type = #{tabletType},
+		is_special_toxic_tablets
+		= #{isSpecialToxicTablets},
+		is_fresh_zh_medicine =
+		#{isFreshZhMedicine},
+		compatibility_taboo_varieties =
+		#{compatibilityTabooVarieties},
+		is_zh_control_medicine =
+		#{isZhControlMedicine},
+		medicine_food_homology =
+		#{medicineFoodHomology},
+		is_new_resources_food = #{isNewResourcesFood}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		DELETE FROM medicine_zh
+		WHERE id = #{id}
+	</update>
+
+</mapper>

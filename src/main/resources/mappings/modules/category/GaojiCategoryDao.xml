@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.category.dao.GaojiCategoryDao">
+    
+	<sql id="gaojiCategoryColumns">
+		a.c_id AS "id",
+		a.c_name AS "name",
+		a.pid AS "parent.id",
+		a.mark AS "mark",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		a.parent_ids AS "parentIds"
+	</sql>
+	
+	<sql id="gaojiCategoryJoins">
+	</sql>
+    
+	<select id="get" resultType="GaojiCategory">
+		SELECT 
+			<include refid="gaojiCategoryColumns"/>
+		FROM gaoji_category a
+		<include refid="gaojiCategoryJoins"/>
+		WHERE a.c_id= #{id}
+	</select>
+	
+	<select id="findList" resultType="GaojiCategory">
+		SELECT 
+			<include refid="gaojiCategoryColumns"/>
+		FROM gaoji_category a
+		<include refid="gaojiCategoryJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.c_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.pid = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="GaojiCategory">
+		SELECT 
+			<include refid="gaojiCategoryColumns"/>
+		FROM gaoji_category a
+		<include refid="gaojiCategoryJoins"/>
+		<where>
+			
+		</where>
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="GaojiCategory">
+		SELECT
+			a.c_id,
+			a.pid AS "parent.id",
+			a.parent_ids
+		FROM gaoji_category a
+		<include refid="gaojiCategoryJoins"/>
+		<where>
+			
+			AND a.parent_ids LIKE #{parentIds}
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO gaoji_category(
+			<!-- c_id, -->
+			c_name,
+			pid,
+			mark,
+			create_time,
+			update_time,
+			parent_ids
+		) VALUES (
+			<!-- #{id}, -->
+			#{name},
+			#{parent.id},
+			#{mark},
+			#{createTime},
+			#{updateTime},
+			#{parentIds}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE gaoji_category SET 	
+			c_name = #{name},
+			pid = #{parent.id},
+			mark = #{mark},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			parent_ids = #{parentIds}
+		WHERE c_id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE gaoji_category SET 
+			pid = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE c_id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM gaoji_category
+		WHERE c_id = #{id} OR parent_ids LIKE '%${id},%'
+	</update>
+	
+</mapper>

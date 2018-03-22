@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.medicine_sell.dao.MedicineSellDao">
+    
+	<sql id="medicineSellColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.suggested_retail_price AS "suggestedRetailPrice",
+		a.procurement_price AS "procurementPrice",
+		a.retail_price AS "retailPrice",
+		a.member_price AS "memberPrice",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="medicineSellJoins">
+	</sql>
+    
+	<select id="get" resultType="MedicineSell">
+		SELECT 
+		b.name AS "gjName",
+			<include refid="medicineSellColumns"/>
+		FROM medicine_sell a,product b
+		<include refid="medicineSellJoins"/>
+		WHERE 
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="MedicineSell">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="medicineSellColumns"/>
+		FROM medicine_sell a,product b
+		<include refid="medicineSellJoins"/>
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="MedicineSell">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="medicineSellColumns"/>
+		FROM medicine_sell a,product b
+		<include refid="medicineSellJoins"/>
+		<where>
+			a.gj_id=b.id
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO medicine_sell(
+			<!-- id, -->
+			gj_id,
+			suggested_retail_price,
+			procurement_price,
+			retail_price,
+			member_price,
+			create_time,
+			update_time
+		) VALUES (
+			<!-- #{id}, -->
+			#{gjId},
+			#{suggestedRetailPrice},
+			#{procurementPrice},
+			#{retailPrice},
+			#{memberPrice},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE medicine_sell SET 	
+			gj_id = #{gjId},
+			suggested_retail_price = #{suggestedRetailPrice},
+			procurement_price = #{procurementPrice},
+			retail_price = #{retailPrice},
+			member_price = #{memberPrice},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM medicine_sell
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

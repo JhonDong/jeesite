@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.medicine_qs.dao.MedicineQsDao">
+
+	<sql id="medicineQsColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.industry_standard AS
+		"industryStandard",
+		a.national_standard_code AS "nationalStandardCode",
+		a.international_bar_code AS "internationalBarCode",
+		a.prescription_label AS "prescriptionLabel",
+		a.use_days AS "useDays",
+		a.course_days AS "courseDays",
+		a.validity_period AS "validityPeriod"
+	</sql>
+
+	<sql id="medicineQsJoins">
+	</sql>
+
+	<select id="get" resultType="MedicineQs">
+		SELECT
+		<include refid="medicineQsColumns" />
+		,b.name AS "gjName"
+		FROM medicine_qs a,product b
+		<include refid="medicineQsJoins" />
+		WHERE
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="MedicineQs">
+		SELECT
+		<include refid="medicineQsColumns" />
+		,b.name AS "gjName"
+		FROM medicine_qs a,product b
+		<include refid="medicineQsJoins" />
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="MedicineQs">
+		SELECT
+		<include refid="medicineQsColumns" />
+		,b.name AS "gjName"
+		FROM medicine_qs a,product b
+		<include refid="medicineQsJoins" />
+		<where>
+			a.gj_id=b.id
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO medicine_qs(
+		gj_id,
+		industry_standard,
+		national_standard_code,
+		international_bar_code,
+		prescription_label,
+		use_days,
+		course_days,
+		validity_period
+		) VALUES (
+		#{gjId},
+		#{industryStandard},
+		#{nationalStandardCode},
+		#{internationalBarCode},
+		#{prescriptionLabel},
+		#{useDays},
+		#{courseDays},
+		#{validityPeriod}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE medicine_qs SET
+		gj_id = #{gjId},
+		industry_standard = #{industryStandard},
+		national_standard_code =
+		#{nationalStandardCode},
+		international_bar_code =
+		#{internationalBarCode},
+		prescription_label = #{prescriptionLabel},
+		use_days = #{useDays},
+		course_days = #{courseDays},
+		validity_period =
+		#{validityPeriod}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		DELETE FROM medicine_qs
+		WHERE id = #{id}
+	</update>
+
+</mapper>

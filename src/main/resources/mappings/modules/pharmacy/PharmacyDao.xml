@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.pharmacy.dao.PharmacyDao">
+    
+	<sql id="pharmacyColumns">
+		a.id AS "id",
+		a.code AS "code",
+		a.name AS "name",
+		a.company_name AS "companyName",
+		a.opening_time AS "openingTime",
+		a.close_time AS "closeTime",
+		a.store_nature1 AS "storeNature1",
+		a.store_nature2 AS "storeNature2",
+		a.getway AS "getway",
+		a.acquisition AS "acquisition",
+		a.address AS "address",
+		a.partition AS "partition",
+		a.houses_nature AS "housesNature",
+		a.is_deed AS "isDeed",
+		a.is_rental_contract AS "isRentalContract",
+		a.is_landlord_rents AS "isLandlordRents",
+		a.lessor AS "lessor",
+		a.lessee AS "lessee",
+		a.lease_start_date AS "leaseStartDate",
+		a.lease_end_date AS "leaseEndDate",
+		a.is_medical_insurance AS "isMedicalInsurance",
+		a.is_invoice AS "isInvoice",
+		a.is_sublet AS "isSublet",
+		a.month_sublet_income AS "monthSubletIncome",
+		a.rental_area AS "rentalArea",
+		a.business_area AS "businessArea",
+		a.taxpayer_qualification AS "taxpayerQualification"
+	</sql>
+	
+	<sql id="pharmacyJoins">
+	</sql>
+    
+	<select id="get" resultType="Pharmacy">
+		SELECT 
+			<include refid="pharmacyColumns"/>
+		FROM pharmacy a
+		<include refid="pharmacyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Pharmacy">
+		SELECT 
+			<include refid="pharmacyColumns"/>
+		FROM pharmacy a
+		<include refid="pharmacyJoins"/>
+		<where>
+			
+			<if test="code != null and code != ''">
+				AND a.code = #{code}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="companyName != null and companyName != ''">
+				AND a.company_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Pharmacy">
+		SELECT 
+			<include refid="pharmacyColumns"/>
+		FROM pharmacy a
+		<include refid="pharmacyJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO pharmacy(
+			code,
+			name,
+			company_name,
+			opening_time,
+			close_time,
+			store_nature1,
+			store_nature2,
+			getway,
+			acquisition,
+			address,
+			partition,
+			houses_nature,
+			is_deed,
+			is_rental_contract,
+			is_landlord_rents,
+			lessor,
+			lessee,
+			lease_start_date,
+			lease_end_date,
+			is_medical_insurance,
+			is_invoice,
+			is_sublet,
+			month_sublet_income,
+			rental_area,
+			business_area,
+			taxpayer_qualification
+		) VALUES (
+			#{code},
+			#{name},
+			#{companyName},
+			#{openingTime},
+			#{closeTime},
+			#{storeNature1},
+			#{storeNature2},
+			#{getway},
+			#{acquisition},
+			#{address},
+			#{partition},
+			#{housesNature},
+			#{isDeed},
+			#{isRentalContract},
+			#{isLandlordRents},
+			#{lessor},
+			#{lessee},
+			#{leaseStartDate},
+			#{leaseEndDate},
+			#{isMedicalInsurance},
+			#{isInvoice},
+			#{isSublet},
+			#{monthSubletIncome},
+			#{rentalArea},
+			#{businessArea},
+			#{taxpayerQualification}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE pharmacy SET 	
+			code = #{code},
+			name = #{name},
+			company_name = #{companyName},
+			opening_time = #{openingTime},
+			close_time = #{closeTime},
+			store_nature1 = #{storeNature1},
+			store_nature2 = #{storeNature2},
+			getway = #{getway},
+			acquisition = #{acquisition},
+			address = #{address},
+			partition = #{partition},
+			houses_nature = #{housesNature},
+			is_deed = #{isDeed},
+			is_rental_contract = #{isRentalContract},
+			is_landlord_rents = #{isLandlordRents},
+			lessor = #{lessor},
+			lessee = #{lessee},
+			lease_start_date = #{leaseStartDate},
+			lease_end_date = #{leaseEndDate},
+			is_medical_insurance = #{isMedicalInsurance},
+			is_invoice = #{isInvoice},
+			is_sublet = #{isSublet},
+			month_sublet_income = #{monthSubletIncome},
+			rental_area = #{rentalArea},
+			business_area = #{businessArea},
+			taxpayer_qualification = #{taxpayerQualification}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM pharmacy
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

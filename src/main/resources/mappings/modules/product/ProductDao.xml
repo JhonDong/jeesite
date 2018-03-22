@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.product.dao.ProductDao">
+
+	<sql id="productColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.product_name AS
+		"productName",
+		a.product_name_en AS "productNameEn",
+		a.specification AS
+		"specification",
+		a.dosage AS "dosage",
+		a.approval_number AS
+		"approvalNumber",
+		a.barcode AS "barcode",
+		a.national_standard_code AS
+		"nationalStandardCode",
+		a.unit AS "unit",
+		a.product_factory AS
+		"productFactory",
+		a.product_address AS "productAddress",
+		a.adaptation_disease AS "adaptationDisease",
+		a.status AS "status",
+		a.approval_date AS "approvalDate",
+		a.marketing_level AS
+		"marketingLevel",
+		a.model AS "model",
+		a.gj_4th_cid AS "gj4thCid",
+		a.is_delete AS "isDelete",
+		a.create_time AS "createTime",
+		a.update_time
+		AS "updateTime",
+		a.mark AS "mark"
+	</sql>
+	<sql id="productJoins">
+	</sql>
+
+	<select id="get" resultType="Product">
+		SELECT
+		b.c_name AS "gj4thCidName",
+		<include refid="productColumns" />
+		FROM product a,gaoji_category b
+		<include refid="productJoins" />
+		WHERE
+		a.gj_4th_cid=b.c_id
+		AND
+		a.id = #{id}
+	</select>
+
+
+	<select id="search" resultType="Product">
+		SELECT
+		<include refid="productColumns" />
+		FROM product a
+		<where>
+			<if test="name != null and name != ''">
+				AND a.product_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			AND is_delete=0
+		</where>
+	</select>
+
+	<select id="findList" resultType="Product">
+		SELECT
+		b.c_name AS "gj4thCidName",
+		<include refid="productColumns" />
+		FROM product a,gaoji_category b
+		<include refid="productJoins" />
+		<where>
+			a.gj_4th_cid=b.c_id
+			<if test="name != null and name != ''">
+				AND a.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="productName != null and productName != ''">
+				AND a.product_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{productName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{productName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{productName},'%')</if>
+			</if>
+			<if test="productNameEn != null and productNameEn != ''">
+				AND a.product_name_en = #{productNameEn}
+			</if>
+			<if test="isDelete != null and isDelete != ''">
+				AND a.is_delete = #{isDelete}
+			</if>
+			<if test="gj4thCid != null and gj4thCid != ''">
+				AND a.gj_4th_cid = #{gj4thCid}
+			</if>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="Product">
+		SELECT
+		b.c_name AS "gj4thCidName",
+		<include refid="productColumns" />
+		FROM product a,gaoji_category b
+		<include refid="productJoins" />
+		<where>
+			a.gj_4th_cid=b.c_id
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO product(
+		id,
+		name,
+		product_name,
+		product_name_en,
+		specification,
+		dosage,
+		approval_number,
+		barcode,
+		national_standard_code,
+		unit,
+		product_factory,
+		product_address,
+		adaptation_disease,
+		status,
+		approval_date,
+		marketing_level,
+		model,
+		gj_4th_cid,
+		is_delete,
+		create_time,
+		update_time,
+		mark
+		) VALUES (
+		#{id},
+		#{name},
+		#{productName},
+		#{productNameEn},
+		#{specification},
+		#{dosage},
+		#{approvalNumber},
+		#{barcode},
+		#{nationalStandardCode},
+		#{unit},
+		#{productFactory},
+		#{productAddress},
+		#{adaptationDisease},
+		#{status},
+		#{approvalDate},
+		#{marketingLevel},
+		#{model},
+		#{gj4thCid},
+		#{isDelete},
+		#{createTime},
+		#{updateTime},
+		#{mark}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE product SET
+		name = #{name},
+		product_name =
+		#{productName},
+		product_name_en = #{productNameEn},
+		specification =
+		#{specification},
+		dosage = #{dosage},
+		approval_number =
+		#{approvalNumber},
+		barcode = #{barcode},
+		national_standard_code =
+		#{nationalStandardCode},
+		unit = #{unit},
+		product_factory =
+		#{productFactory},
+		product_address = #{productAddress},
+		adaptation_disease = #{adaptationDisease},
+		status = #{status},
+		approval_date = #{approvalDate},
+		marketing_level = #{marketingLevel},
+		model = #{model},
+		gj_4th_cid = #{gj4thCid},
+		is_delete = #{isDelete},
+		update_time=#{updateTime},
+		mark = #{mark}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		<!-- DELETE FROM product WHERE id = #{id} -->
+		UPDATE product SET
+		is_delete = 1
+		WHERE id = #{id}
+	</update>
+
+</mapper>

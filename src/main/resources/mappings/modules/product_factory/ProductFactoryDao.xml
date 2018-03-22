@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.thinkgem.jeesite.modules.product_factory.dao.ProductFactoryDao">
+
+	<sql id="productFactoryColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.code AS "code",
+		a.social_credit_code AS "socialCreditCode",
+		a.cate_code AS "cateCode",
+		a.province AS "province",
+		a.company_name AS "companyName",
+		a.legal_manger AS "legalManger",
+		a.company_manger AS "companyManger",
+		a.qa_manger AS "qaManger",
+		a.reg_address AS "regAddress",
+		a.address AS
+		"address",
+		a.production_range AS "productionRange",
+		a.opening_date AS
+		"openingDate",
+		a.indate AS "indate",
+		a.issuing_authority AS
+		"issuingAuthority",
+		a.signer AS "signer",
+		a.daily_regulators AS
+		"dailyRegulators",
+		a.daily_supervisor AS "dailySupervisor",
+		a.is_delete
+		AS "isDelete",
+		a.mark AS "mark",
+		a.basis AS "basis",
+		a.factory_license_num AS "factoryLicenseNum",
+		a.factory_license_indate
+		AS "factoryLicenseIndate",
+		a.manufacturers_group AS
+		"manufacturersGroup",
+		a.manufacturers_group_en AS
+		"manufacturersGroupEn",
+		a.manufacturers_factory AS
+		"manufacturersFactory",
+		a.registered_trademark AS
+		"registeredTrademark",
+		a.registered_trademark_en AS
+		"registeredTrademarkEn",
+		a.create_time AS "createTime",
+		a.update_time AS
+		"updateTime"
+	</sql>
+
+	<sql id="productFactoryJoins">
+		LEFT JOIN sys_area a6 ON a6.id = a.province
+	</sql>
+	<!-- 关联查询 -->
+	<select id="get" resultType="ProductFactory">
+		SELECT
+		<include refid="productFactoryColumns" />
+		,b.name AS "gjName"
+		FROM product_factory a,product b
+		<!-- <include refid="productFactoryJoins"/> -->
+		WHERE
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="ProductFactory">
+		SELECT
+		<include refid="productFactoryColumns" />
+		,b.name AS "gjName"
+		FROM product_factory a,product b
+		<!-- <include refid="productFactoryJoins" /> -->
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+			<if test="province != null and province != ''">
+				AND a.province = #{province}
+			</if>
+			<if test="companyName != null and companyName != ''">
+				AND a.company_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{companyName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{companyName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{companyName},'%')</if>
+			</if>
+			<if test="address != null and address != ''">
+				AND a.address LIKE
+				<if test="dbName == 'oracle'">'%'||#{address}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{address}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{address},'%')</if>
+			</if>
+			<if test="isDelete != null and isDelete != ''">
+				AND a.is_delete = #{isDelete}
+			</if>
+			<if test="manufacturersFactory != null and manufacturersFactory != ''">
+				AND a.manufacturers_factory LIKE
+				<if test="dbName == 'oracle'">'%'||#{manufacturersFactory}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{manufacturersFactory}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{manufacturersFactory},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="ProductFactory">
+		SELECT
+		<include refid="productFactoryColumns" />
+		,b.name AS "gjName"
+		FROM product_factory a,product b
+		<!-- <include refid="productFactoryJoins" /> -->
+		<where>
+			a.gj_id=b.id
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO product_factory(
+		<!-- id, -->
+		gj_id,
+		code,
+		social_credit_code,
+		cate_code,
+		province,
+		company_name,
+		legal_manger,
+		company_manger,
+		qa_manger,
+		reg_address,
+		address,
+		production_range,
+		opening_date,
+		indate,
+		issuing_authority,
+		signer,
+		daily_regulators,
+		daily_supervisor,
+		is_delete,
+		mark,
+		basis,
+		factory_license_num,
+		factory_license_indate,
+		manufacturers_group,
+		manufacturers_group_en,
+		manufacturers_factory,
+		registered_trademark,
+		registered_trademark_en,
+		create_time,
+		update_time
+		) VALUES (
+		<!-- #{id}, -->
+		#{gjId},
+		#{code},
+		#{socialCreditCode},
+		#{cateCode},
+		#{province},
+		#{companyName},
+		#{legalManger},
+		#{companyManger},
+		#{qaManger},
+		#{regAddress},
+		#{address},
+		#{productionRange},
+		#{openingDate},
+		#{indate},
+		#{issuingAuthority},
+		#{signer},
+		#{dailyRegulators},
+		#{dailySupervisor},
+		#{isDelete},
+		#{mark},
+		#{basis},
+		#{factoryLicenseNum},
+		#{factoryLicenseIndate},
+		#{manufacturersGroup},
+		#{manufacturersGroupEn},
+		#{manufacturersFactory},
+		#{registeredTrademark},
+		#{registeredTrademarkEn},
+		#{createTime},
+		#{updateTime}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE product_factory SET
+		gj_id = #{gjId},
+		code =
+		#{code},
+		social_credit_code = #{socialCreditCode},
+		cate_code =
+		#{cateCode},
+		province = #{province},
+		company_name = #{companyName},
+		legal_manger = #{legalManger},
+		company_manger = #{companyManger},
+		qa_manger = #{qaManger},
+		reg_address = #{regAddress},
+		address =
+		#{address},
+		production_range = #{productionRange},
+		opening_date =
+		#{openingDate},
+		indate = #{indate},
+		issuing_authority =
+		#{issuingAuthority},
+		signer = #{signer},
+		daily_regulators =
+		#{dailyRegulators},
+		daily_supervisor = #{dailySupervisor},
+		is_delete =
+		#{isDelete},
+		mark = #{mark},
+		basis = #{basis},
+		factory_license_num =
+		#{factoryLicenseNum},
+		factory_license_indate = #{factoryLicenseIndate},
+		manufacturers_group = #{manufacturersGroup},
+		manufacturers_group_en =
+		#{manufacturersGroupEn},
+		manufacturers_factory =
+		#{manufacturersFactory},
+		registered_trademark = #{registeredTrademark},
+		registered_trademark_en = #{registeredTrademarkEn},
+		create_time =
+		#{createTime},
+		update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+	<!-- DELETE FROM product_factory WHERE id = #{id} -->
+		UPDATE product_factory SET
+		is_delete = 1
+		WHERE id = #{id}
+	</update>
+
+</mapper>

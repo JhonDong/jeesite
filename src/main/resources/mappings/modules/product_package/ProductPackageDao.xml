@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.product_package.dao.ProductPackageDao">
+    
+	<sql id="productPackageColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.packing_specifications AS "packingSpecifications",
+		a.box_width AS "boxWidth",
+		a.box_wide AS "boxWide",
+		a.box_height AS "boxHeight",
+		a.box_weight AS "boxWeight",
+		a.storage_conditions AS "storageConditions",
+		a.shipping_conditions AS "shippingConditions",
+		a.is_fragile AS "isFragile"
+	</sql>
+	
+	<sql id="productPackageJoins">
+	</sql>
+    
+	<select id="get" resultType="ProductPackage">
+		SELECT 
+			<include refid="productPackageColumns"/>
+			,b.name AS "gjName"
+		FROM product_package a,product b
+		<include refid="productPackageJoins"/>
+		WHERE 
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ProductPackage">
+		SELECT 
+			<include refid="productPackageColumns"/>
+		,b.name AS "gjName"
+		FROM product_package a,product b
+		<include refid="productPackageJoins"/>
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ProductPackage">
+		SELECT 
+			<include refid="productPackageColumns"/>
+		,b.name AS "gjName"
+		FROM product_package a,product b
+		<include refid="productPackageJoins"/>
+		<where>
+			a.gj_id=b.id
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO product_package(
+			<!-- id, -->
+			gj_id,
+			packing_specifications,
+			box_width,
+			box_wide,
+			box_height,
+			box_weight,
+			storage_conditions,
+			shipping_conditions,
+			is_fragile
+		) VALUES (
+			<!-- #{id}, -->
+			#{gjId},
+			#{packingSpecifications},
+			#{boxWidth},
+			#{boxWide},
+			#{boxHeight},
+			#{boxWeight},
+			#{storageConditions},
+			#{shippingConditions},
+			#{isFragile}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE product_package SET 	
+			gj_id = #{gjId},
+			packing_specifications = #{packingSpecifications},
+			box_width = #{boxWidth},
+			box_wide = #{boxWide},
+			box_height = #{boxHeight},
+			box_weight = #{boxWeight},
+			storage_conditions = #{storageConditions},
+			shipping_conditions = #{shippingConditions},
+			is_fragile = #{isFragile}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM product_package
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

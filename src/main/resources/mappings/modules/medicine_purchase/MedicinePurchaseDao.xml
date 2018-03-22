@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.medicine_purchase.dao.MedicinePurchaseDao">
+    
+	<sql id="medicinePurchaseColumns">
+		a.id AS "id",
+		a.gj_id AS "gjId",
+		a.settlement_method AS "settlementMethod",
+		a.purchasing_attr AS "purchasingAttr",
+		a.vmi_min_num AS "vmiMinNum",
+		a.vmi_min_money AS "vmiMinMoney",
+		a.own_brand AS "ownBrand",
+		a.delivery_method AS "deliveryMethod",
+		a.returns_code AS "returnsCode",
+		a.purchaser_id AS "purchaserId",
+		a.purchaser_name AS "purchaserName",
+		a.tax_control_code AS "taxControlCode",
+		a.tax_rate AS "taxRate",
+		a.supplier_code AS "supplierCode",
+		a.supplier_name AS "supplierName",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="medicinePurchaseJoins">
+	</sql>
+    
+	<select id="get" resultType="MedicinePurchase">
+		SELECT 
+		b.name AS "gjName",
+			<include refid="medicinePurchaseColumns"/>
+		FROM medicine_purchase a,product b
+		<include refid="medicinePurchaseJoins"/>
+		WHERE 
+		a.gj_id=b.id
+		AND
+		a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="MedicinePurchase">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="medicinePurchaseColumns"/>
+		FROM medicine_purchase a,product b
+		<include refid="medicinePurchaseJoins"/>
+		<where>
+			a.gj_id=b.id
+			<if test="gjId != null and gjId != ''">
+				AND a.gj_id = #{gjId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="MedicinePurchase">
+		SELECT 
+			b.name AS "gjName",
+			<include refid="medicinePurchaseColumns"/>
+		FROM medicine_purchase a,product b
+		<include refid="medicinePurchaseJoins"/>
+		<where>
+			a.gj_id=b.id
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO medicine_purchase(
+			gj_id,
+			settlement_method,
+			purchasing_attr,
+			vmi_min_num,
+			vmi_min_money,
+			own_brand,
+			delivery_method,
+			returns_code,
+			purchaser_id,
+			purchaser_name,
+			tax_control_code,
+			tax_rate,
+			supplier_code,
+			supplier_name,
+			create_time,
+			update_time
+		) VALUES (
+			#{gjId},
+			#{settlementMethod},
+			#{purchasingAttr},
+			#{vmiMinNum},
+			#{vmiMinMoney},
+			#{ownBrand},
+			#{deliveryMethod},
+			#{returnsCode},
+			#{purchaserId},
+			#{purchaserName},
+			#{taxControlCode},
+			#{taxRate},
+			#{supplierCode},
+			#{supplierName},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE medicine_purchase SET 	
+			gj_id = #{gjId},
+			settlement_method = #{settlementMethod},
+			purchasing_attr = #{purchasingAttr},
+			vmi_min_num = #{vmiMinNum},
+			vmi_min_money = #{vmiMinMoney},
+			own_brand = #{ownBrand},
+			delivery_method = #{deliveryMethod},
+			returns_code = #{returnsCode},
+			purchaser_id = #{purchaserId},
+			purchaser_name = #{purchaserName},
+			tax_control_code = #{taxControlCode},
+			tax_rate = #{taxRate},
+			supplier_code = #{supplierCode},
+			supplier_name = #{supplierName},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM medicine_purchase
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
