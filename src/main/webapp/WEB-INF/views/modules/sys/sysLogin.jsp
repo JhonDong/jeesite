@@ -144,7 +144,7 @@ label.error {
 			<label id="loginError" class="error">${message}</label>
 		</div>
 	</div>
-	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
+	<h1 class="form-signin-heading">${fns:getConfig('productName')}管理系统</h1>
 	<form id="loginForm" class="form-signin" action="${ctx}/login"
 		method="post">
 		<label class="input-label" for="username">登录名</label> <input
