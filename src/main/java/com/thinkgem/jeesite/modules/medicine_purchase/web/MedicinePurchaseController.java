@@ -3,8 +3,6 @@
  */
 package com.thinkgem.jeesite.modules.medicine_purchase.web;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +25,7 @@ import com.thinkgem.jeesite.modules.medicine_purchase.service.MedicinePurchaseSe
 /**
  * 商品采购Controller
  * @author 董志强
- * @version 2018-03-08
+ * @version 2018-03-22
  */
 @Controller
 @RequestMapping(value = "${adminPath}/medicine_purchase/medicinePurchase")
@@ -62,25 +60,12 @@ public class MedicinePurchaseController extends BaseController {
 		model.addAttribute("medicinePurchase", medicinePurchase);
 		return "modules/medicine_purchase/medicinePurchaseForm";
 	}
-	@RequiresPermissions("medicine_purchase:medicinePurchase:view")
-	@RequestMapping(value = "form1")
-	public String form1(MedicinePurchase medicinePurchase, Model model) {
-		model.addAttribute("medicinePurchase", medicinePurchase);
-		return "modules/medicine_purchase/medicinePurchaseForm2";
-	}
 
 	@RequiresPermissions("medicine_purchase:medicinePurchase:edit")
 	@RequestMapping(value = "save")
 	public String save(MedicinePurchase medicinePurchase, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, medicinePurchase)){
 			return form(medicinePurchase, model);
-		}
-		Date date=new Date();
-		medicinePurchase.setUpdateTime(date);
-		//插入操作
-		if("".equals(medicinePurchase.getId())){
-			medicinePurchase.setCreateTime(date);
-			medicinePurchase.setIsNewRecord(true);
 		}
 		medicinePurchaseService.save(medicinePurchase);
 		addMessage(redirectAttributes, "保存商品采购成功");

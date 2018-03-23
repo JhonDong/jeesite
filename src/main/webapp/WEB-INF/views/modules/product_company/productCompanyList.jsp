@@ -110,7 +110,7 @@
 			<c:forEach items="${page.list}" var="productCompany">
 				<tr>
 					<td><a
-						href="${ctx}/product_company/productCompany/form?id=${productCompany.id}">
+						href="${ctx}/product_company/productCompany/form?id=${productCompany.gjId}">
 							${productCompany.gjId} </a></td>
 					<td>${productCompany.productName}</td>
 					<td>${productCompany.dsId}</td>
@@ -120,9 +120,9 @@
 					<td>${productCompany.kbxId}</td>
 					<shiro:hasPermission name="product_company:productCompany:edit">
 						<td><a
-							href="${ctx}/product_company/productCompany/form?id=${productCompany.id}">修改</a>
+							href="${ctx}/product_company/productCompany/form?id=${productCompany.gjId}">修改</a>
 							<a
-							href="${ctx}/product_company/productCompany/delete?id=${productCompany.id}"
+							href="${ctx}/product_company/productCompany/delete?id=${productCompany.gjId}"
 							onclick="return confirmx('确认要删除该商品企业对照吗？', this.href)">删除</a></td>
 					</shiro:hasPermission>
 				</tr>

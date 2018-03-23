@@ -6,7 +6,26 @@
 <meta name="decorator" content="default" />
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		$("#btnExport").click(function() {
+			top.$.jBox.confirm("确认要导出用户数据吗？", "系统提示", function(v, h, f) {
+				if (v == "ok") {
+					$("#searchForm").attr("action", "${ctx}/pharmacy/pharmacy/export");
+					$("#searchForm").submit();
+				}
+			}, {
+				buttonsFocus : 1
+			});
+			top.$('.jbox-body .jbox-icon').css('top', '55px');
+		});
+		$("#btnImport").click(function() {
+			$.jBox($("#importBox").html(), {
+				title : "导入数据",
+				buttons : {
+					"关闭" : true
+				},
+				bottomText : "导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"
+			});
+		});
 	});
 	function page(n, s) {
 		$("#pageNo").val(n);
@@ -17,6 +36,18 @@
 </script>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/pharmacy/pharmacy/import" method="post"
+			enctype="multipart/form-data" class="form-search"
+			style="padding-left: 20px; text-align: center;"
+			onsubmit="loading('正在导入，请稍等...');">
+			<br /> <input id="uploadFile" name="file" type="file"
+				style="width: 330px" /><br />
+			<br /> <input id="btnImportSubmit" class="btn btn-primary"
+				type="submit" value="   导    入   " /> <a
+				href="${ctx}/pharmacy/pharmacy/import/template">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/pharmacy/pharmacy/">门户管理列表</a></li>
 		<shiro:hasPermission name="pharmacy:pharmacy:edit">
@@ -37,7 +68,9 @@
 			<li><label>企业名称：</label> <form:input path="companyName"
 					htmlEscape="false" maxlength="60" class="input-medium" /></li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary"
-				type="submit" value="查询" /></li>
+				type="submit" value="查询" />
+				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+				<input id="btnImport" class="btn btn-primary" type="button" value="导入"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -58,15 +91,19 @@
 				<th><div style="width: 100px" align="center">门店地址</div></th>
 				<th>行政区划</th>
 				<th>房屋性质</th>
-				<th>是否有房产证</th>
-				<th>是否签订房租合同</th>
-				<th>是否直接与房东签约</th>
+				<th>是否有</br>房产证
+				</th>
+				<th>是否签订</br>房租合同
+				</th>
+				<th>是否直接</br>与房东签约
+				</th>
 				<th><div style="width: 100px" align="center">出租方</div></th>
 				<th><div style="width: 100px" align="center">承租方</div></th>
 				<th><div style="width: 80px" align="center">租赁开始日</div></th>
 				<th><div style="width: 80px" align="center">租赁结束日</div></th>
 				<th>是否医保</th>
-				<th>是否取得房租发票</th>
+				<th>是否取得</br>房租发票
+				</th>
 				<th>是否转租</th>
 				<th>当月转租收入</th>
 				<th>租赁面积</th>

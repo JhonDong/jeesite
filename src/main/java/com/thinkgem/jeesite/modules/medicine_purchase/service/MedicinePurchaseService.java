@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.medicine_purchase.dao.MedicinePurchaseDao;
 /**
  * 商品采购Service
  * @author 董志强
- * @version 2018-03-08
+ * @version 2018-03-22
  */
 @Service
 @Transactional(readOnly = true)

@@ -41,6 +41,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">商品名称：</label>
+			<div class="controls">
+				<form:input path="productName" htmlEscape="false" maxlength="20" class="input-xlarge  digits"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">东升ID：</label>
 			<div class="controls">
 				<form:input path="dsId" htmlEscape="false" maxlength="20" class="input-xlarge  digits"/>

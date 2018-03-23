@@ -22,56 +22,6 @@
 					}
 				}
 			});
-			
-			/**
-			 * 商品 模糊查询下拉列表
-			 */
-			$("#c01-select").select2({
-				ajax : {
-					type : 'GET',
-					url : "${ctx}/product/product/search",
-					dataType : 'json',
-					delay : 250,
-					data : function(term) {
-						return query = { // 请求的参数, 关键字和搜索条件之类的
-							// select搜索框里面的value
-							q : term
-
-						}
-					},
-					results : function(data) {
-						// notice we return the value of more so Select2 knows if more
-						// results can be loaded
-						return {
-							results : data
-						};
-					},
-					cache : true
-				},
-				placeholder : '请选择',// 默认文字提示
-				language : "zh-CN",
-				allowClear : true,// 允许清空
-				minimumInputLength : 1,// 最少输入多少个字符后开始查询
-				dropdownCssClass : "bigdrop", // apply css that makes the dropdown
-												// taller
-				formatResult : function formatRepo(repo) {
-					return repo.text;
-				}, // 函数用来渲染结果
-				formatSelection : function formatRepoSelection(repo) {
-					return repo.text;
-				},// 函数用于呈现当前的选择
-				initSelection : function(element, callback) {
-					var id = $(element).val();
-					$.ajax({
-						url : "${ctx}/product/product/callback.json?id=" + id,
-						type : 'GET',
-						dataType : 'json',
-						success : function(data) {
-							callback(data);
-						}
-					});
-				}
-			});
 		});
 	</script>
 </head>
@@ -84,10 +34,9 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">高济商品：</label>
+			<label class="control-label">高济商品id：</label>
 			<div class="controls">
-				<form:input path="gjId" htmlEscape="false" maxlength="20"
-					class="input-xlarge required digits" id="c01-select"/>
+				<form:input path="gjId" htmlEscape="false" maxlength="20" class="input-xlarge required digits"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -179,6 +128,20 @@
 			<label class="control-label">供应商名称：</label>
 			<div class="controls">
 				<form:input path="supplierName" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">create_time：</label>
+			<div class="controls">
+				<form:input path="createTime" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">update_time：</label>
+			<div class="controls">
+				<form:input path="updateTime" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

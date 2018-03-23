@@ -27,24 +27,19 @@
     
 	<select id="get" resultType="MedicinePurchase">
 		SELECT 
-		b.name AS "gjName",
 			<include refid="medicinePurchaseColumns"/>
-		FROM medicine_purchase a,product b
+		FROM medicine_purchase a
 		<include refid="medicinePurchaseJoins"/>
-		WHERE 
-		a.gj_id=b.id
-		AND
-		a.id = #{id}
+		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="MedicinePurchase">
 		SELECT 
-			b.name AS "gjName",
 			<include refid="medicinePurchaseColumns"/>
-		FROM medicine_purchase a,product b
+		FROM medicine_purchase a
 		<include refid="medicinePurchaseJoins"/>
 		<where>
-			a.gj_id=b.id
+			
 			<if test="gjId != null and gjId != ''">
 				AND a.gj_id = #{gjId}
 			</if>
@@ -60,12 +55,11 @@
 	
 	<select id="findAllList" resultType="MedicinePurchase">
 		SELECT 
-			b.name AS "gjName",
 			<include refid="medicinePurchaseColumns"/>
-		FROM medicine_purchase a,product b
+		FROM medicine_purchase a
 		<include refid="medicinePurchaseJoins"/>
 		<where>
-			a.gj_id=b.id
+			
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -130,6 +124,7 @@
 			tax_rate = #{taxRate},
 			supplier_code = #{supplierCode},
 			supplier_name = #{supplierName},
+			create_time = #{createTime},
 			update_time = #{updateTime}
 		WHERE id = #{id}
 	</update>

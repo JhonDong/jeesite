@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.medicine_purchase.entity.MedicinePurchase;
 /**
  * 商品采购DAO接口
  * @author 董志强
- * @version 2018-03-08
+ * @version 2018-03-22
  */
 @MyBatisDao
 public interface MedicinePurchaseDao extends CrudDao<MedicinePurchase> {

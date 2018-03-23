@@ -3,11 +3,13 @@
  */
 package com.thinkgem.jeesite.modules.pharmacy.entity;
 
-import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
 /**
  * 门户管理Entity
@@ -53,6 +55,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 
 	@Length(min=1, max=20, message="门店编码长度必须介于 1 和 20 之间")
+	@ExcelField(title="门店编码", type=1, align=2, sort=1)
 	public String getCode() {
 		return code;
 	}
@@ -62,6 +65,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=1, max=255, message="门店名称长度必须介于 1 和 255 之间")
+	@ExcelField(title="门店名称", align=2, sort=2)
 	public String getName() {
 		return name;
 	}
@@ -71,6 +75,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=60, message="企业名称长度必须介于 0 和 60 之间")
+	@ExcelField(title="企业名称", align=1, sort=3)
 	public String getCompanyName() {
 		return companyName;
 	}
@@ -79,7 +84,8 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 		this.companyName = companyName;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@ExcelField(title="开业时间", align=2, sort=4)
 	public Date getOpeningTime() {
 		return openingTime;
 	}
@@ -88,7 +94,8 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 		this.openingTime = openingTime;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@ExcelField(title="关店时间", align=2, sort=5)
 	public Date getCloseTime() {
 		return closeTime;
 	}
@@ -96,7 +103,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setCloseTime(Date closeTime) {
 		this.closeTime = closeTime;
 	}
-	
+	@ExcelField(title="门店性质", align=2, sort=6)
 	public String getStoreNature1() {
 		return storeNature1;
 	}
@@ -104,7 +111,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setStoreNature1(String storeNature1) {
 		this.storeNature1 = storeNature1;
 	}
-	
+	@ExcelField(title="门店性质", align=2, sort=7)
 	public String getStoreNature2() {
 		return storeNature2;
 	}
@@ -112,7 +119,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setStoreNature2(String storeNature2) {
 		this.storeNature2 = storeNature2;
 	}
-	
+	@ExcelField(title="获得方式", align=2, sort=8)
 	public String getGetway() {
 		return getway;
 	}
@@ -122,6 +129,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="收购时间", align=2, sort=9)
 	public Date getAcquisition() {
 		return acquisition;
 	}
@@ -131,6 +139,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="门店地址长度必须介于 0 和 255 之间")
+	@ExcelField(title="门店地址", align=2, sort=10)
 	public String getAddress() {
 		return address;
 	}
@@ -140,6 +149,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="行政区划长度必须介于 0 和 255 之间")
+	@ExcelField(title="行政区", align=2, sort=11)
 	public String getPartition() {
 		return partition;
 	}
@@ -147,7 +157,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setPartition(String partition) {
 		this.partition = partition;
 	}
-	
+	@ExcelField(title="房屋性质", align=2, sort=12)
 	public String getHousesNature() {
 		return housesNature;
 	}
@@ -157,6 +167,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="有无房产证长度必须介于 0 和 4 之间")
+	@ExcelField(title="有无房产证", align=2, sort=13,dictType="yes_no")
 	public String getIsDeed() {
 		return isDeed;
 	}
@@ -166,6 +177,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="是否签订房租合同长度必须介于 0 和 4 之间")
+	@ExcelField(title="是否签订房租合同", align=2, sort=14,dictType="yes_no")
 	public String getIsRentalContract() {
 		return isRentalContract;
 	}
@@ -175,6 +187,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="是否直接与房东签约长度必须介于 0 和 4 之间")
+	@ExcelField(title="是否直接与房东签约", align=2, sort=15,dictType="yes_no")
 	public String getIsLandlordRents() {
 		return isLandlordRents;
 	}
@@ -184,6 +197,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="出租方长度必须介于 0 和 255 之间")
+	@ExcelField(title="出租方", align=2, sort=16)
 	public String getLessor() {
 		return lessor;
 	}
@@ -193,6 +207,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="承租方长度必须介于 0 和 255 之间")
+	@ExcelField(title="承租方", align=2, sort=17)
 	public String getLessee() {
 		return lessee;
 	}
@@ -201,7 +216,8 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 		this.lessee = lessee;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@ExcelField(title="租赁开始日", align=2, sort=18)
 	public Date getLeaseStartDate() {
 		return leaseStartDate;
 	}
@@ -210,7 +226,8 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 		this.leaseStartDate = leaseStartDate;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@ExcelField(title="租赁结束日", align=2, sort=19)
 	public Date getLeaseEndDate() {
 		return leaseEndDate;
 	}
@@ -220,6 +237,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="是否医保长度必须介于 0 和 4 之间")
+	@ExcelField(title="是否医保", align=2, sort=20,dictType="yes_no")
 	public String getIsMedicalInsurance() {
 		return isMedicalInsurance;
 	}
@@ -229,6 +247,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="是否能取得房租发票长度必须介于 0 和 4 之间")
+	@ExcelField(title="是否能取得房租发票", align=2, sort=21,dictType="yes_no")
 	public String getIsInvoice() {
 		return isInvoice;
 	}
@@ -238,6 +257,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=4, message="是否转租长度必须介于 0 和 4 之间")
+	@ExcelField(title="是否转租", align=2, sort=22,dictType="yes_no")
 	public String getIsSublet() {
 		return isSublet;
 	}
@@ -247,6 +267,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="当月转租收入长度必须介于 0 和 255 之间")
+	@ExcelField(title="当月转租收入", align=2, sort=23)
 	public String getMonthSubletIncome() {
 		return monthSubletIncome;
 	}
@@ -254,7 +275,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setMonthSubletIncome(String monthSubletIncome) {
 		this.monthSubletIncome = monthSubletIncome;
 	}
-	
+	@ExcelField(title="租赁面积", align=2, sort=24)
 	public Integer getRentalArea() {
 		return rentalArea;
 	}
@@ -262,7 +283,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setRentalArea(Integer rentalArea) {
 		this.rentalArea = rentalArea;
 	}
-	
+	@ExcelField(title="经营面积", align=2, sort=25)
 	public Integer getBusinessArea() {
 		return businessArea;
 	}
@@ -272,6 +293,7 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	}
 	
 	@Length(min=0, max=255, message="纳税人资质长度必须介于 0 和 255 之间")
+	@ExcelField(title="纳税人资质", align=2, sort=26)
 	public String getTaxpayerQualification() {
 		return taxpayerQualification;
 	}
@@ -279,5 +301,8 @@ public class Pharmacy extends DataEntity<Pharmacy> {
 	public void setTaxpayerQualification(String taxpayerQualification) {
 		this.taxpayerQualification = taxpayerQualification;
 	}
-	
+	@Override
+	public String toString() {
+		return id;
+	}
 }

@@ -6,55 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/**
-			 * 商品 模糊查询下拉列表
-			 */
-			$("#c01-select").select2({
-				ajax : {
-					type : 'GET',
-					url : "${ctx}/product/product/search",
-					dataType : 'json',
-					delay : 250,
-					data : function(term) {
-						return query = { // 请求的参数, 关键字和搜索条件之类的
-							// select搜索框里面的value
-							q : term
-
-						}
-					},
-					results : function(data) {
-						// notice we return the value of more so Select2 knows if more
-						// results can be loaded
-						return {
-							results : data
-						};
-					},
-					cache : true
-				},
-				placeholder : '请选择',// 默认文字提示
-				language : "zh-CN",
-				allowClear : true,// 允许清空
-				minimumInputLength : 1,// 最少输入多少个字符后开始查询
-				dropdownCssClass : "bigdrop", // apply css that makes the dropdown
-												// taller
-				formatResult : function formatRepo(repo) {
-					return repo.text;
-				}, // 函数用来渲染结果
-				formatSelection : function formatRepoSelection(repo) {
-					return repo.text;
-				},// 函数用于呈现当前的选择
-				initSelection : function(element, callback) {
-					var id = $(element).val();
-					$.ajax({
-						url : "${ctx}/product/product/callback.json?id=" + id,
-						type : 'GET',
-						dataType : 'json',
-						success : function(data) {
-							callback(data);
-						}
-					});
-				}
-			});
+			
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -73,8 +25,8 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>高济商品名：</label>
-				<form:input id="c01-select" path="gjId" htmlEscape="false" maxlength="20" class="input-medium"/>
+			<li><label>高济商品id：</label>
+				<form:input path="gjId" htmlEscape="false" maxlength="20" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -84,7 +36,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>高济商品</th>
+				<th>高济商品id</th>
 				<th>结算方式</th>
 				<th>采购属性</th>
 				<th>铺底数量</th>
@@ -98,16 +50,16 @@
 				<th>税率</th>
 				<th>供应商编码</th>
 				<th>供应商名称</th>
-				<th>创建时间</th>
-				<th>更新时间</th>
+				<th>create_time</th>
+				<th>update_time</th>
 				<shiro:hasPermission name="medicine_purchase:medicinePurchase:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="medicinePurchase">
 			<tr>
-				<td><a href="${ctx}/medicine_purchase/medicinePurchase/form1?id=${medicinePurchase.id}">
-					${medicinePurchase.gjName}
+				<td><a href="${ctx}/medicine_purchase/medicinePurchase/form?id=${medicinePurchase.id}">
+					${medicinePurchase.gjId}
 				</a></td>
 				<td>
 					${fns:getDictLabel(medicinePurchase.settlementMethod, 'settlement_method', '')}
@@ -155,7 +107,7 @@
 					<fmt:formatDate value="${medicinePurchase.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="medicine_purchase:medicinePurchase:edit"><td>
-    				<a href="${ctx}/medicine_purchase/medicinePurchase/form1?id=${medicinePurchase.id}">修改</a>
+    				<a href="${ctx}/medicine_purchase/medicinePurchase/form?id=${medicinePurchase.id}">修改</a>
 					<a href="${ctx}/medicine_purchase/medicinePurchase/delete?id=${medicinePurchase.id}" onclick="return confirmx('确认要删除该商品采购吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
