@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.nc_pharmacy.dao.NcPharmacyDao">
+    
+	<sql id="ncPharmacyColumns">
+		a.nc_id AS "ncId",
+		a.pharmacy_id AS "pharmacyId",
+		a.pharmacy_name AS "pharmacyName",
+		a.corp_name AS "corpName"
+	</sql>
+	
+	<sql id="ncPharmacyJoins">
+	</sql>
+    
+	<select id="get" resultType="NcPharmacy">
+		SELECT 
+			<include refid="ncPharmacyColumns"/>
+		FROM nc_pharmacy a
+		<include refid="ncPharmacyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="NcPharmacy">
+		SELECT 
+			<include refid="ncPharmacyColumns"/>
+		FROM nc_pharmacy a
+		<include refid="ncPharmacyJoins"/>
+		<where>
+			
+			<if test="pharmacyName != null and pharmacyName != ''">
+				AND a.pharmacy_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pharmacyName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pharmacyName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pharmacyName},'%')</if>
+			</if>
+			<if test="corpName != null and corpName != ''">
+				AND a.corp_name = #{corpName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="NcPharmacy">
+		SELECT 
+			<include refid="ncPharmacyColumns"/>
+		FROM nc_pharmacy a
+		<include refid="ncPharmacyJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO nc_pharmacy(
+			nc_id,
+			pharmacy_id,
+			pharmacy_name,
+			corp_name
+		) VALUES (
+			#{ncId},
+			#{pharmacyId},
+			#{pharmacyName},
+			#{corpName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE nc_pharmacy SET 	
+			nc_id = #{ncId},
+			pharmacy_id = #{pharmacyId},
+			pharmacy_name = #{pharmacyName},
+			corp_name = #{corpName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM nc_pharmacy
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
