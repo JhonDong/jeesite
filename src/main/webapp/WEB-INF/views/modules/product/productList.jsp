@@ -53,26 +53,26 @@
 		class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>商品名</th>
-				<th>通用名</th>
-				<th>英文名</th>
-				<th>规格</th>
-				<th>剂型</th>
-				<th>批准文号</th>
+				<th><div style="width:80px;" align="center">商品名</div></th>
+				<th><div style="width:80px;" align="center">通用名</div></th>
+				<th><div style="width:80px;" align="center">英文名</div></th>
+				<th><div style="width:80px;" align="center">规格</div></th>
+				<th><div style="width:50px;" align="center">剂型</div></th>
+				<th><div style="width:60px;" align="center">批准文号</div></th>
 				<th>商品编码</th>
-				<!-- <th>国家本位码</th> -->
+				<th>国家本位码</th>
 				<th>单位</th>
-				<th>生产厂家</th>
-				<th>产地</th>
+				<th><div style="width:120px;" align="center">生产厂家</div></th>
+				<th><div style="width:120px;" align="center">产地</div></th>
 				<!-- <th>适应症</th> -->
 				<th>商品状态</th>
-				<th>批准日期</th>
+				<th><div style="width:80px;" align="center">批准日期</div></th>
 				<th>营销级别</th>
-				<!-- <th>型号</th> -->
+				<th>型号</th>
 				<th>高济四级分类</th>
 				<th>是否删除</th>
-				<th>创建时间</th>
-				<th>更新时间</th>
+				<th><div style="width:80px;" align="center">创建时间</div></th>
+				<th><div style="width:80px;" align="center">更新时间</div></th>
 				<th>预留备注字段</th>
 				<shiro:hasPermission name="product:product:edit">
 					<th>操作</th>
@@ -90,7 +90,7 @@
 					<td>${product.dosage}</td>
 					<td>${product.approvalNumber}</td>
 					<td>${product.barcode}</td>
-					<%-- <td>${product.nationalStandardCode}</td> --%>
+					<td>${product.nationalStandardCode}</td>
 					<td>${product.unit}</td>
 					<td>${product.productFactory}</td>
 					<td>${product.productAddress}</td>
@@ -100,7 +100,7 @@
 					<td><fmt:formatDate value="${product.approvalDate}"
 							pattern="yyyy-MM-dd" /></td>
 					<td>${product.marketingLevel}</td>
-					<%-- <td>${product.model}</td> --%>
+					<td>${product.model}</td>
 					<td>${product.gj4thCidName}</td>
 					<td>${fns:getDictLabel(product.isDelete, 'del_flag', '')}</td>
 					<td><fmt:formatDate value="${product.createTime}"

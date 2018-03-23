@@ -61,7 +61,7 @@
 		<input id="pageSize" name="pageSize" type="hidden"
 			value="${page.pageSize}" />
 		<ul class="ul-form">
-			<li><label>门店编码：</label> <form:input path="code"
+			<li><label>NC编码：</label> <form:input path="code"
 					htmlEscape="false" maxlength="20" class="input-medium" /></li>
 			<li><label>门店名称：</label> <form:input path="name"
 					htmlEscape="false" maxlength="255" class="input-medium" /></li>
@@ -79,7 +79,7 @@
 		class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>门店编码</th>
+				<th>NC编码</th>
 				<th><div style="width: 200px" align="center">门店名称</div></th>
 				<th>企业名称</th>
 				<th><div style="width: 80px" align="center">开业时间</div></th>

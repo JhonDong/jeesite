@@ -46,24 +46,24 @@
 		<thead>
 			<tr>
 				<th>批准文号</th>
-				<th>产品名称</th>
-				<th>英文名称</th>
-				<th>商品名</th>
-				<th>英文名称</th>
-				<th>剂型</th>
-				<th>规格</th>
-				<th>生产单位名称</th>
-				<th>生产单位英文名</th>
-				<th>生产地址</th>
-				<th>产地英文</th>
+				<th><div style="width:80px;" align="center">产品名称</div></th>
+				<th><div style="width:80px;" align="center">英文名称</div></th>
+				<th><div style="width:80px;" align="center">商品名</div></th>
+				<th><div style="width:80px;" align="center">英文名称</div></th>
+				<th><div style="width:50px;" align="center">剂型</div></th>
+				<th><div style="width:50px;" align="center">规格</div></th>
+				<th><div style="width:120px;" align="center">生产单位名称</div></th>
+				<th><div style="width:120px;" align="center">生产单位英文名</div></th>
+				<th><div style="width:120px;" align="center">生产地址</div></th>
+				<th><div style="width:120px;" align="center">产地英文</div></th>
 				<th>药品类别</th>
-				<th>批准日期</th>
+				<th><div style="width:80px;" align="center">批准日期</div></th>
 				<th>有效期截止</th>
 				<th>原批准文号</th>
-				<th>药品本位码</th>
-				<th>药品本位码</th>
-				<th>更新时间</th>
-				<th>创建时间</th>
+				<th><div style="width:120px;" align="center">药品本位码</th>
+				<!-- <th><div style="width:120px;" align="center">药品本位码</div></th> -->
+				<th><div style="width:80px;" align="center">更新时间</div></th>
+				<th><div style="width:80px;" align="center">创建时间</div></th>
 				<th>产品类别</th>
 				<th>国际条形码</th>
 				<shiro:hasPermission name="product_temp:productTemp:edit"><th>操作</th></shiro:hasPermission>
@@ -120,9 +120,9 @@
 				<td>
 					${productTemp.medCode}
 				</td>
-				<td>
+				<%-- <td>
 					${productTemp.medCodeMark}
-				</td>
+				</td> --%>
 				<td>
 					${productTemp.updateTime}
 				</td>
