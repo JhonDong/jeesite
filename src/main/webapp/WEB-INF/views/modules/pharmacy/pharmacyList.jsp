@@ -26,6 +26,7 @@
 				bottomText : "导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"
 			});
 		});
+		
 	});
 	function page(n, s) {
 		$("#pageNo").val(n);
@@ -70,7 +71,7 @@
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary"
 				type="submit" value="查询" />
 				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
-				<input id="btnImport" class="btn btn-primary" type="button" value="导入"/></li>
+				<!-- <input id="btnImport" class="btn btn-primary" type="button" value="导入"/> --></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

@@ -49,7 +49,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="ncPharmacy">
 			<tr>
-				<td><a href="${ctx}/nc_pharmacy/ncPharmacy/form?id=${ncPharmacy.id}">
+				<td><a href="${ctx}/nc_pharmacy/ncPharmacy/form?id=${ncPharmacy.ncId}">
 					${ncPharmacy.ncId}
 				</a></td>
 				<td>
@@ -62,8 +62,8 @@
 					${ncPharmacy.corpName}
 				</td>
 				<shiro:hasPermission name="nc_pharmacy:ncPharmacy:edit"><td>
-    				<a href="${ctx}/nc_pharmacy/ncPharmacy/form?id=${ncPharmacy.id}">修改</a>
-					<a href="${ctx}/nc_pharmacy/ncPharmacy/delete?id=${ncPharmacy.id}" onclick="return confirmx('确认要删除该门店映射吗？', this.href)">删除</a>
+    				<a href="${ctx}/nc_pharmacy/ncPharmacy/form?id=${ncPharmacy.ncId}">修改</a>
+					<a href="${ctx}/nc_pharmacy/ncPharmacy/delete?id=${ncPharmacy.ncId}" onclick="return confirmx('确认要删除该门店映射吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

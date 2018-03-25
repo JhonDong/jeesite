@@ -8,11 +8,15 @@
 <meta name="decorator" content="blank" />
 <style type="text/css">
 html, body, table {
-	/* background-color: #f5f5f5; */
-	background-image: url("${ctxStatic}/images/login.jpg");
-	width: 100%;
+	/* background-color: #f5f5f5;  */
+	 background-color: #DCDCDC; 
+	/* background-image: url("${ctxStatic}/images/login1.jpg"); */
+	width : 100%; 
 	text-align: center;
-	overflow-y: hidden !important;
+}
+html{
+width: 100%;
+height: 100%
 }
 
 .form-signin-heading {
@@ -146,7 +150,7 @@ label.error {
 			<label id="loginError" class="error">${message}</label>
 		</div>
 	</div>
-	<h1 class="form-signin-heading">${fns:getConfig('productName')}管理系统</h1>
+	<h1 class="form-signin-heading">主数据管理系统</h1>
 	<form id="loginForm" class="form-signin" action="${ctx}/login"
 		method="post">
 		<label class="input-label" for="username">登录名</label> <input

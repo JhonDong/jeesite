@@ -17,7 +17,7 @@
 			<include refid="ncPharmacyColumns"/>
 		FROM nc_pharmacy a
 		<include refid="ncPharmacyJoins"/>
-		WHERE a.id = #{id}
+		WHERE a.nc_id = #{id}
 	</select>
 	
 	<select id="findList" resultType="NcPharmacy">
@@ -34,7 +34,10 @@
 					<if test="dbName == 'mysql'">concat('%',#{pharmacyName},'%')</if>
 			</if>
 			<if test="corpName != null and corpName != ''">
-				AND a.corp_name = #{corpName}
+				AND a.corp_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{corpName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{corpName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{corpName},'%')</if>
 			</if>
 		</where>
 		<choose>
