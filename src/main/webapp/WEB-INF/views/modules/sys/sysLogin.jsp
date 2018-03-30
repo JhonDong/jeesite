@@ -13,6 +13,7 @@ html, body, table {
 	/* background-image: url("${ctxStatic}/images/login1.jpg"); */
 	width : 100%; 
 	text-align: center;
+	overflow-y:hidden !important;
 }
 html{
 width: 100%;
@@ -158,20 +159,21 @@ label.error {
 			class="input-block-level required" value="${username}"> <label
 			class="input-label" for="password">密码</label> <input type="password"
 			id="password" name="password" class="input-block-level required">
-		<c:if test="${isValidateCodeLogin}">
+		<%-- <c:if test="${isValidateCodeLogin}"> --%>
 			<div class="validateCode">
 				<label class="input-label mid" for="validateCode">验证码</label>
 				<sys:validateCode name="validateCode"
 					inputCssStyle="margin-bottom:0;" />
 			</div>
-		</c:if>
+		<%-- </c:if> --%>
 		<%--
 		<label for="mobile" title="手机登录"><input type="checkbox" id="mobileLogin" name="mobileLogin" ${mobileLogin ? 'checked' : ''}/></label> --%>
 		<input class="btn btn-large btn-primary" type="submit" value="登 录" />&nbsp;&nbsp;
 		<label for="rememberMe" title="下次不需要再登录"><input
 			type="checkbox" id="rememberMe" name="rememberMe"
 			${rememberMe ? 'checked' : ''} /> 记住我（公共场所慎用）</label>
-		<div id="themeSwitch" class="dropdown">
+			<div align="right"><a>忘记密码？</a></div>
+		<%-- <div id="themeSwitch" class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b
 				class="caret"></b></a>
 			<ul class="dropdown-menu" style="">
@@ -181,12 +183,12 @@ label.error {
 				</c:forEach>
 			</ul>
 			<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
-		</div>
+		</div> --%>
 	</form>
-	<div id="footer" class="row-fluid">
+	<!-- <div id="footer" class="row-fluid">
 		版权所有&copy;2017 北京<a href="http://www.gaojimed.com" target="_blank">高济医疗</a>有限公司
 		All right reserved. 京IPC备88888号
-	</div>
+	</div> -->
 	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>
 </body>
 </html>
